@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:task_manager/app.dart';
+import 'package:task_manager/presentation/controller/auth_controller.dart';
 import 'package:task_manager/presentation/screens/auth/sign_in_screen.dart';
 import 'package:task_manager/presentation/screens/profile_editing_screen.dart';
 
@@ -24,6 +25,7 @@ PreferredSizeWidget get  profileAppbar {
             Text("omarfaruk4543@gmail.com", style: TextStyle(color: Colors.white, fontWeight: FontWeight.w400,fontSize: 14))
           ],),
         ), IconButton(onPressed: () {
+          AuthController.clearUserData();
           Navigator.pushAndRemoveUntil(TaskManager.navigatorKey.currentState!.context, MaterialPageRoute(builder: (context) => const SignInScreen()), (route) => false);
           }, icon: const Icon(Icons.logout))
       ],),

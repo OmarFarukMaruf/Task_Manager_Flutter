@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:task_manager/presentation/controller/auth_controller.dart';
 import 'package:task_manager/presentation/screens/auth/sign_in_screen.dart';
+import 'package:task_manager/presentation/screens/main_navbar_screen.dart';
 import 'package:task_manager/presentation/widgets/background_widget.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -19,10 +21,19 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   Future<void> _moveToSign() async{
-    await Future.delayed(const Duration(seconds: 3));
+    await Future.delayed(const Duration(seconds: 2));
+
+    String? token = await AuthController.getUserToken();
+
     if (mounted){
-      Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (context) => const SignInScreen()));
+      if(token == null){
+        Navigator.pushReplacement(
+            context, MaterialPageRoute(builder: (context) => const SignInScreen()));
+      } else {
+        Navigator.pushReplacement(
+            context, MaterialPageRoute(builder: (context) => const MainNavbarScreen()));
+
+      }
     }
 
   }

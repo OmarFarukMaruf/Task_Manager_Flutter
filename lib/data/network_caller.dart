@@ -46,6 +46,14 @@ class NetworkCaller{
             isSuccess: true,
             statusCode: 200, responseBody: decodeResponse);
       }
+      else if (response.statusCode == 401) {
+        return ResponseObject(
+            isSuccess: false,
+            statusCode: response.statusCode,
+            responseBody: '',
+        errorMassage: 'Email or Password is incorrect');
+
+      }
       else {
         return ResponseObject(isSuccess: false,
             statusCode: response.statusCode, responseBody: '');

@@ -123,33 +123,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           child: ElevatedButton(
                             onPressed: () async {
                             if (_fromKey.currentState!.validate()) {
-                              _isRegistrationInProgress = true;
-                              setState(() {});
-                              Map<String, dynamic> inputParams = {
-                                "email": _emailTEcontroller.text.trim(),
-                                "firstName": _firstNameTEcontroller.text.trim(),
-                                "lastName": _lastNameTEcontroller.text.trim(),
-                                "mobile": _mobileTEcontroller.text.trim(),
-                                "password": _passwordTEcontroller.text,
-                              };
-
-                              final ResponseObject response = await NetworkCaller.postRequest(
-                                  Urls.registration, inputParams);
-                              _isRegistrationInProgress = false;
-                              setState(() {});
-                              if (response.isSuccess) {
-                                if (mounted) {
-                                  showSnackBarMassage(
-                                      context, "Registration successful");
-                                  Navigator.pop(context);
-                                }
-                              }
-                              else {
-                                if (mounted) {
-                                  showSnackBarMassage(
-                                      context, "Registration failed! Try again", true);
-                                }
-                              }
+                              _signUp();
                             }
                           },
                             child: const Icon(Icons.arrow_right),),
@@ -173,6 +147,36 @@ class _SignUpScreenState extends State<SignUpScreen> {
               ),
             ))
     );
+  }
+
+  Future<void> _signUp() async {
+    _isRegistrationInProgress = true;
+    setState(() {});
+    Map<String, dynamic> inputParams = {
+      "email": _emailTEcontroller.text.trim(),
+      "firstName": _firstNameTEcontroller.text.trim(),
+      "lastName": _lastNameTEcontroller.text.trim(),
+      "mobile": _mobileTEcontroller.text.trim(),
+      "password": _passwordTEcontroller.text,
+    };
+
+    final ResponseObject response = await NetworkCaller.postRequest(
+        Urls.registration, inputParams);
+    _isRegistrationInProgress = false;
+    setState(() {});
+    if (response.isSuccess) {
+      if (mounted) {
+        showSnackBarMassage(
+            context, "Registration successful");
+        Navigator.pop(context);
+      }
+    }
+    else {
+      if (mounted) {
+        showSnackBarMassage(
+            context, "Registration failed! Try again", true);
+      }
+    }
   }
   @override
   void dispose() {
